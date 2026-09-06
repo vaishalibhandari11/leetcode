@@ -1,34 +1,39 @@
 class Solution {
 public:
-    void twoSum(vector<int>& nums, int k, vector<vector<int>>& result, int target) {
-        //Two pointer technique (Sorted array) Things you must not forget in interviews
-        
-        int i = k, j = nums.size()-1;
-        while(i < j) {
-            if(nums[i]+nums[j] > target)
-                j--;
-            else if(nums[i] + nums[j] < target)
-                i++;
-            else {
-                result.push_back({-target, nums[i], nums[j]});
-                while(i < j && nums[i] == nums[i+1]) i++;
-                while(i < j && nums[j] == nums[j-1]) j--;
-                i++; //Things you must not forget in interviews
-                j--; //Things you must not forget in interviews
-            }
+   vector<vector<int>>result;
+   void twoSum(vector<int>&nums,int target,int i,int j){
+    while(i<j){
+        if(nums[i]+nums[j]>target)
+        j--;
+        else if(nums[i]+nums[j]<target)
+        i++;
+        else{
+            while(i<j&&nums[i]==nums[i+1])
+            i++;
+             while(i<j&&nums[j]==nums[j-1])
+             j--;
+             result.push_back({-target,nums[i],nums[j]});
+             i++;
+             j--;
         }
     }
+   }
     vector<vector<int>> threeSum(vector<int>& nums) {
-        if(nums.size() < 3) //Things you must not forget in interviews
-            return {};
-        vector<vector<int>> result;
-        sort(nums.begin(), nums.end());
-        for(int i = 0; i<nums.size()-2; i++) {  //(i<nums.size()-2)Things you must not forget in interviews
-            if(i!= 0 && nums[i] == nums[i-1]) { //Things you must not forget in interviews
+        int n=nums.size();
+        if(n<3){
+            return{};
+        }
+        result.clear();
+        sort(begin(nums),end(nums));
+        for(int i=0;i<n;i++){
+            if(i>0&&nums[i]==nums[i-1]){
                 continue;
             }
-            twoSum(nums, i+1, result, -nums[i]);
+            int n1=nums[i];
+            int target=-n1;
+            twoSum(nums,target,i+1,n-1);
         }
         return result;
+
     }
 };
