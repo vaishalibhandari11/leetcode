@@ -1,26 +1,25 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int i = 0;
-        int j = numbers.size() - 1; // Start at the last valid index
-        
-        while (i < j) {
-            int currentSum = numbers[i] + numbers[j];
-            
-            if (currentSum == target) {
-                // Problem requires 1-indexed results
-                return {i + 1, j + 1}; 
-            }
-            else if (currentSum < target) {
-                // Sum is too small, move the left pointer right to increase sum
-                i++;
-            }
-            else {
-                // Sum is too big, move the right pointer left to decrease sum
-                j--;
-            }
+    vector<int>pairsum(vector<int>arr,int target){
+    int st=0,end=arr.size()-1;
+    int currSum=0;
+    vector<int>ans;
+    while(st<end){
+        currSum=arr[st]+arr[end];
+        if(currSum==target){
+            ans.push_back(st+1);
+            ans.push_back(end+1);
+            return ans;
         }
-        
-        return {}; // Fallback required by compiler syntax
+        else if(currSum>target){
+        end--;}
+        else{
+        st++;}
     }
+return ans;
+}
+vector<int> twoSum(vector<int>& nums, int target) {
+    
+        return pairsum(nums, target);
+}
 };
