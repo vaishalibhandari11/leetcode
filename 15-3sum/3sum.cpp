@@ -1,39 +1,32 @@
 class Solution {
 public:
-   vector<vector<int>>result;
-   void twoSum(vector<int>&nums,int target,int i,int j){
-    while(i<j){
-        if(nums[i]+nums[j]>target)
-        j--;
-        else if(nums[i]+nums[j]<target)
-        i++;
-        else{
-            while(i<j&&nums[i]==nums[i+1])
-            i++;
-             while(i<j&&nums[j]==nums[j-1])
-             j--;
-             result.push_back({-target,nums[i],nums[j]});
-             i++;
-             j--;
+   vector<vector<int>> threeSum(vector<int>& nums){
+    vector<vector<int>> ans;
+    int n = nums.size();
+    sort(nums.begin(), nums.end());
+    for(int i = 0; i < n; i++){
+        if(i > 0 && nums[i] == nums[i - 1])
+        {
+            continue;
         }
-    }
+        
+        // 1. FIXED: Set k to n - 1 to prevent crashes
+        int j = i + 1; int k = n - 1; 
+        
+        // 2. FIXED: Added the missing condition to loop through j and k
+        while (j < k) {
+            int sum = nums[i] + nums[j] + nums[k];
+            if (sum == 0) {
+                ans.push_back({nums[i], nums[j], nums[k]});
+                while (j < k && nums[j] == nums[j + 1]) j++; // Skip duplicates
+                while (j < k && nums[k] == nums[k - 1]) k--; // Skip duplicates
+                j++; k--;
+            } 
+            else if (sum < 0) j++;
+            else k--;
+        }
+    } // 4. FIXED: Removed the extra semicolon that was here
+    
+    return ans; // 3. FIXED: Added the missing return statement
    }
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        int n=nums.size();
-        if(n<3){
-            return{};
-        }
-        result.clear();
-        sort(begin(nums),end(nums));
-        for(int i=0;i<n;i++){
-            if(i>0&&nums[i]==nums[i-1]){
-                continue;
-            }
-            int n1=nums[i];
-            int target=-n1;
-            twoSum(nums,target,i+1,n-1);
-        }
-        return result;
-
-    }
 };
